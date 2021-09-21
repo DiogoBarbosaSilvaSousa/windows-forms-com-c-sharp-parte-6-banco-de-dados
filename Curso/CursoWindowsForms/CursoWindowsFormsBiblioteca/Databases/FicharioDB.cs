@@ -137,7 +137,7 @@ namespace CursoWindowsFormsBiblioteca.Databases
 
                 if (dt.Rows.Count > 0)
                 {
-                    // DELETE FROM CLIENTE WHERE ID = '000010'
+                    //// DELETE FROM CLIENTE WHERE ID = '000010'
                     sql = "DELETE FROM " + tabela + " WHERE ID = '" + Id + "'";
                     db.SQLCommand(sql);
 
@@ -168,7 +168,7 @@ namespace CursoWindowsFormsBiblioteca.Databases
                 if (dt.Rows.Count > 0)
                 {
                     // UPDATE CLIENTE SET JSON ='{...}' WHERE ID = '000010'
-                    sql = "UPDATE " + tabela + " SET JSON = '" + tabela + "' WHERE ID = '" + Id + "'";
+                    sql = "UPDATE " + tabela + " SET JSON = '" + jsonUnit + "' WHERE ID = '" + Id + "'";
                     db.SQLCommand(sql);
 
                     status = true;
