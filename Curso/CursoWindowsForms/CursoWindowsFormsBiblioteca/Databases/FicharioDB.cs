@@ -51,5 +51,143 @@ namespace CursoWindowsFormsBiblioteca.Databases
             }
 
         }
+
+        public string Buscar(string Id)
+        {
+            status = true;
+            try
+            {
+                // SELECT ID, JSON FROM CLIENTE WHERE ID = '000001'
+
+                var sql = "SELECT Id, JSON FROM " + tabela + " WHERE ID = '" + Id + "'";
+                var dt = db.SQLQuery(sql);
+
+                if(dt.Rows.Count  > 0)
+                {
+                    string conteudo = dt.Rows[0]["JSON"].ToString();
+                    status = true;
+                    mensagem = "Busca efetuada com sucesso. Identificador: " + Id;
+                    return conteudo;
+
+                }
+                else
+                {
+                    status = false;
+                    mensagem = "Identificador não existente: " + Id;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                status = false;
+                mensagem = "Erro ao buscar o conteúdo do identificador: " + ex.Message;
+            }
+            return "";
+        }
+
+        public List<string> BuscarTodos()
+        {
+            status = true;
+            List<string> List = new List<string>();
+            try
+            {
+                // SELECT ID, JSON FROM CLIENTE
+
+                var sql = "SELECT Id, JSON FROM " + tabela;
+                var dt = db.SQLQuery(sql);
+
+                if (dt.Rows.Count > 0)
+                {                   
+                    status = true;
+                    mensagem = "Listagem efetuada com sucesso.";
+
+                    for (int i = 0; i <= dt.Rows.Count - 1; i++)
+                    {
+                        string conteudo = dt.Rows[i]["JSON"].ToString();
+                        List.Add(conteudo);
+                    }
+
+                    return List;
+
+                }
+                else
+                {
+                    status = false;
+                    mensagem = "Não existem clientes na base de dados.";
+                }
+
+                
+            }
+            catch (Exception ex)
+            {
+                status = false;
+                mensagem = "Erro ao buscar o conteúdo da lista de clientes: " + ex.Message;
+            }
+            return List;
+        }
+
+        public void Apagar(string Id)
+        {
+            status = true;
+            try
+            {
+
+                var sql = "SELECT Id, JSON FROM " + tabela + " WHERE ID = '" + Id + "'";
+                var dt = db.SQLQuery(sql);
+
+                if (dt.Rows.Count > 0)
+                {
+                    // DELETE FROM CLIENTE WHERE ID = '000010'
+                    sql = "DELETE FROM " + tabela + " WHERE ID = '" + Id + "'";
+                    db.SQLCommand(sql);
+
+                    status = true;
+                    mensagem = "Exlusão efetuada com sucesso. Identificador: " + Id;
+
+                }
+                else
+                {
+                    status = false;
+                    mensagem = "Identificador não existente: " + Id;
+                }
+            }
+            catch (Exception ex)
+            {
+                status = false;
+                mensagem = "Erro ao buscar o conteúdo do identificador: " + ex.Message;
+            }
+        }
+        public void Alterar(string Id, string jsonUnit)
+        {
+            status = true;
+            try
+            {
+                var sql = "SELECT Id, JSON FROM " + tabela + " WHERE ID = '" + Id + "'";
+                var dt = db.SQLQuery(sql);
+
+                if (dt.Rows.Count > 0)
+                {
+                    // UPDATE CLIENTE SET JSON ='{...}' WHERE ID = '000010'
+                    sql = "UPDATE " + tabela + " SET JSON = '" + tabela + "' WHERE ID = '" + Id + "'";
+                    db.SQLCommand(sql);
+
+                    status = true;
+                    mensagem = "Alterção efetuada com sucesso. Identificador: " + Id;
+
+                }
+                else
+                {
+                    status = false;
+                    mensagem = "Identificador não existente: " + Id;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                status = false;
+                mensagem = "Conexão com o Fichario com erro: " + ex.Message;
+            }
+
+        }
     }
 }
